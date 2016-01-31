@@ -1,7 +1,5 @@
-= ngx_http_groonga
+= ngx_http_groonga\n全文検索nginx
 
-: subtitle
-   全文検索nginx
 : author
    須藤功平
 : institution
@@ -15,4 +13,185 @@
 : theme
    .
 
-= ...
+= nginx
+
+  * HTTPサーバー
+  * HTTPリバースプロキシサーバー
+  * (('wait'))メールプロキシサーバー
+  * (('wait'))TCPプロキシサーバー\n
+    (('note:1.9.0から。まだmainline。'))
+
+(('wait'))
+(('tag:center'))
+nginx = いろいろできるサーバー
+
+= nginx meets 全文検索
+
+(('tag:center'))
+(('tag:x-large'))
+全文検索も\n
+できる！
+
+(('wait'))
+(('tag:center'))
+(('tag:margin-top * 2'))
+全文検索もできるnginx\n
+↓\n
+全文検索nginx
+
+= 使い方：登録
+
+  # image
+  # src = images/register.svg
+  # relative_height = 100
+
+= 使い方：検索
+
+  # image
+  # src = images/search.svg
+  # relative_height = 100
+
+= 速度：1リクエスト
+
+# CPU：core i7・8コア・ハイパースレッディング
+#
+# ソース：Wikipedia日本語版
+# レコード数：1846514
+# データサイズ：約7GB
+# キーワード：nginx
+# ヒット数：26件
+# 検索時間（出力レコード数0）：0.4ms
+# 検索時間（出力レコード数10・タイトルのみ出力）：0.6ms
+# 検索時間（出力レコード数10・タイトルと本文を出力）：2ms
+
+  * 対象：Wikipedia日本語版
+  * レコード数：約185万
+  * データサイズ：約7GB
+  * 検索キーワード：nginx
+
+(('wait'))
+(('tag:center'))
+(('tag:x-large'))
+0.6ms\n
+(('note:Intel Core i7-6700 3.40GHz'))
+
+= 速度：スループット
+
+# ベンチマーク（出力レコード数10・タイトルのみ出力・ワーカー数8・有線LANで接続）
+
+  # image
+  # src = throughput-no-keep-alive.pdf
+  # relative_height = 100
+
+= 速度：スループット
+
+  # image
+  # src = throughput-with-keep-alive.pdf
+  # relative_height = 100
+
+= 速度
+
+  * 1リクエストの処理も速い
+  * スループットも出る
+    * ワーカー数を増やすとスケール
+    * keep-aliveでさらにスケール
+
+= 速さの理由
+
+  * 本物の全文検索エンジンを組込
+    * →1リクエストの処理が速い
+    * →しかも豊富な機能
+  * それもnginxのよさを殺さずに
+    * 例：I/O多重化
+    * 例：マルチプロセスでスケール
+
+= 本物の全文検索エンジン
+
+  # image
+  # src = images/groonga-logo.svg
+  # relative_width = 100
+
+(('tag:center'))
+（ぐるんが）
+
+= Groonga
+
+  * 速い
+  * (('wait'))日本語に強い（国産）
+  * (('wait'))ライブラリーとして使える
+    * 組み込みやすい
+  * (('wait'))((*マルチプロセス*))対応
+    * 複数のプロセスで同時にDBを使える
+
+= ngx_http_groonga
+
+  # image
+  # src = images/ngx_http_groonga.svg
+  # relative_height = 100
+
+= Groongaから見たメリット
+
+  * nginxと連携すると…
+    * (('wait'))プロセス管理を任せられる
+    * (('wait'))クライアントとのI/Oを任せられる
+    * (('wait'))keep-alive・認証・TLS・圧縮対応
+    * (('wait'))HTTP2対応
+
+(('wait'))
+(('tag:center'))
+全文検索に集中できる！
+
+= 困ったこと
+
+  * nginxのWindows用バイナリーを\n
+    GNU/Linux上でビルドできない
+    * (('wait'))Groongaはバイナリーを配布したい
+    * (('wait'))Windowsが必要だとリリース作業がツライ
+
+= 対策
+
+(('wait'))
+パッチを送る
+
+= 結果
+
+(('wait'))
+取り込まれた\n
+(('note:（1.7.7 released at 2014-10-28）'))
+
+= パッチが取り込まれるまで
+
+  * (('wait'))hgでパッチを作る
+  * (('wait'))メーリングリストに送る
+  * (('wait'))やりとりする
+  * (('wait'))取り込まれる
+
+(('wait'))
+(('tag:center'))
+結構反応してくれるから\n
+なにかあったら送るといいよ！
+
+= 全文検索nginx
+
+  * nginx + Groonga\n
+    (('note: = groonga-httpd：Groongaパッケージに含まれている'))
+    * (('wait'))nginxが全文検索エンジンに！
+    * (('wait'))nginxのモジュール機能で実装
+
+(('wait'))
+(('tag:center'))
+モジュールを作って\n
+nginxと共存しよう！
+
+= お知らせ
+
+  * (('wait'))MySQL・PostgreSQLとも共存
+  * (('wait'))Groongaは肉の日リリース
+
+(('wait'))
+(('tag:center'))
+2月9日にイベントあります！\n
+\n
+MySQLとPostgreSQLと\n
+日本語全文検索\n
+（DMM.comラボにて）
