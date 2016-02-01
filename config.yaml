@@ -8,6 +8,7 @@ tags:
 presentation_date: 2016-02-08
 version: 2016.2.8.0
 licenses:
+- CC BY 3.0
 - CC BY-SA 4.0
 slideshare_id: 
 speaker_deck_id: 
@@ -16,7 +17,7 @@ vimeo_id:
 youtube_id: 
 author:
   markup_language: :rd
-  name: 須藤功平
+  name: Kouhei Sutou
   email: kou@clear-code.com
   rubygems_user: kou
   slideshare_user: kou
