@@ -16,3 +16,19 @@ task :tag do
   sh("git", "tag", "-a", spec.version.to_s, "-m", "Publish #{spec.version}")
   sh("git", "push", "--tags")
 end
+
+pdfs = [
+  "throughput-no-keep-alive.pdf",
+  "throughput-with-keep-alive.pdf",
+]
+
+pdfs.each do |pdf|
+  file pdf => ["throughput.gnuplot", "throughput.data"] do
+    sh("gnuplot", "throughput.gnuplot")
+  end
+end
+
+desc "Generate graphs"
+task :graph => pdfs
+
+task :run => :graph

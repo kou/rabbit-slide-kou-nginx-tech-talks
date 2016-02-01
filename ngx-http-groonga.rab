@@ -25,19 +25,13 @@
 (('tag:center'))
 nginx = いろいろできるサーバー
 
-= nginx meets 全文検索
+= 全文検索nginx
 
-(('tag:center'))
-(('tag:x-large'))
-全文検索も\n
-できる！
-
-(('wait'))
-(('tag:center'))
-(('tag:margin-top * 2'))
-全文検索もできるnginx\n
-↓\n
-全文検索nginx
+  * HTTPサーバー
+  * HTTPリバースプロキシサーバー
+  * メールプロキシサーバー
+  * TCPプロキシサーバー
+  * [((*New!*))]全文検索エンジン！
 
 = 使い方：登録
 
@@ -65,7 +59,7 @@ nginx = いろいろできるサーバー
 # 検索時間（出力レコード数10・タイトルと本文を出力）：2ms
 
   * 対象：Wikipedia日本語版
-  * レコード数：約185万
+  * レコード数：約185万件
   * データサイズ：約7GB
   * 検索キーワード：nginx
 
@@ -81,13 +75,19 @@ nginx = いろいろできるサーバー
 
   # image
   # src = throughput-no-keep-alive.pdf
-  # relative_height = 100
+  # relative_height = 90
+
+(('tag:center'))
+(('note:ワーカー数を増やすとCPUコア数までスケール'))
 
 = 速度：スループット
 
   # image
   # src = throughput-with-keep-alive.pdf
-  # relative_height = 100
+  # relative_height = 90
+
+(('tag:center'))
+(('note:クライアントがkeep-aliveを使うとさらにスケール'))
 
 = 速度
 
@@ -98,12 +98,14 @@ nginx = いろいろできるサーバー
 
 = 速さの理由
 
-  * 本物の全文検索エンジンを組込
-    * →1リクエストの処理が速い
-    * →しかも豊富な機能
-  * それもnginxのよさを殺さずに
-    * 例：I/O多重化
+  * (('wait'))本物の全文検索エンジンを組込
+    * →1リクエストの処理が速い\n
+      (('note:（しかも豊富な機能）'))
+  * (('wait'))それもnginxのよさを殺さずに
     * 例：マルチプロセスでスケール
+    * 例：性能向上用のHTTPの機能を利用\n
+      (('note:（keep-alive、レスポンス圧縮など）'))
+    * 例：I/O多重化(('note:（同時接続数の増加に対応）'))
 
 = 本物の全文検索エンジン
 
@@ -119,9 +121,13 @@ nginx = いろいろできるサーバー
   * 速い
   * (('wait'))日本語に強い（国産）
   * (('wait'))ライブラリーとして使える
-    * 組み込みやすい
+    * ((*組み込みやすい*))
   * (('wait'))((*マルチプロセス*))対応
     * 複数のプロセスで同時にDBを使える
+
+= 組込方法
+
+モジュール
 
 = ngx_http_groonga
 
@@ -135,7 +141,7 @@ nginx = いろいろできるサーバー
     * (('wait'))プロセス管理を任せられる
     * (('wait'))クライアントとのI/Oを任せられる
     * (('wait'))keep-alive・認証・TLS・圧縮対応
-    * (('wait'))HTTP2対応
+    * (('wait'))HTTP2対応(('note:（まだmainline）'))
 
 (('wait'))
 (('tag:center'))
